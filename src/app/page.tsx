@@ -2,10 +2,23 @@
 
 import { useState } from 'react';
 
+interface Score {
+  criterion: string;
+  score: string;
+  positive: string;
+  negative: string;
+}
+
+interface Results {
+  scores: Score[];
+  total_score: string;
+  summary_feedback: string;
+}
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [jobTitle, setJobTitle] = useState('');
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<Results | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,8 +56,10 @@ export default function Home() {
 
       const data = await response.json();
       setResults(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
     }
 
     setLoading(false);
@@ -108,7 +123,7 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {results.scores.map((item: any, index: number) => (
+                  {results.scores.map((item: Score, index: number) => (
                     <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                       <td className="py-2 px-4 border-b">{item.criterion}</td>
                       <td className="py-2 px-4 border-b text-center">{item.score}</td>
