@@ -1,8 +1,8 @@
-#-*- mode: git-ignore -*-
+# -*- mode: git-ignore -*-
 
+.env
 .env.local
 node_modules/
-.next/
 
 # Ignore config files
 cli-version/config.json
