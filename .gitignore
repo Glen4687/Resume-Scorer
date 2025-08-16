@@ -2,6 +2,7 @@
 
 .env
 .env.local
+.next/
 node_modules/
 
 # Ignore config files

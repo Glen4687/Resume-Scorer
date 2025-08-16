@@ -96,7 +96,7 @@ export default function ResumeScorer() {
       const breakdown: { [key: string]: number } = {}
       const feedback: { [key: string]: string } = {}
       
-      data.scores.forEach((item: any) => {
+      data.scores.forEach((item: { criterion: string; score: string; positive: string; negative: string }) => {
         const key = item.criterion.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_')
         breakdown[key] = parseInt(item.score, 10)
         feedback[key] = `${item.positive} ${item.negative}`
@@ -228,7 +228,7 @@ export default function ResumeScorer() {
                   <Target className="h-5 w-5" />
                   Target Job Title
                 </CardTitle>
-                <CardDescription>Enter the job title you're applying for to get customized feedback</CardDescription>
+                <CardDescription>Enter the job title you&apos;re applying for to get customized feedback</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
