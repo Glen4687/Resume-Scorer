@@ -1,0 +1,60 @@
+{
+  "scores": [
+    {
+      "criterion": "customization",
+      "score": "13",
+      "positive": "The resume effectively highlights many essential skills and references relevant methodologies and tools for a Business Analyst role.",
+      "negative": "While the resume is largely tailored, it misses specific keywords like 'SWOT Analysis', 'User Stories', and certifications that could strengthen its alignment with the job requirements."
+    },
+    {
+      "criterion": "spelling_grammar",
+      "score": "9",
+      "positive": "The resume is well-written with no noticeable spelling or grammatical errors.",
+      "negative": "Ensure consistency in punctuation and style for consistency throughout the document."
+    },
+    {
+      "criterion": "summary_statement",
+      "score": "9",
+      "positive": "The summary is concise and effectively outlines the candidate's key strengths in process optimization and data analytics.",
+      "negative": "Could be improved by incorporating more specific keywords from the job description such as 'business requirements' or 'stakeholder management'."
+    },
+    {
+      "criterion": "measurable_results",
+      "score": "15",
+      "positive": "Strong use of measurable results, such as achieving annual savings of $1.5 million and reducing manual reporting by 40%, adds impact.",
+      "negative": "Little room for improvement here as the quantitative achievements are well-represented."
+    },
+    {
+      "criterion": "word_choice",
+      "score": "8",
+      "positive": "Uses strong action verbs and specific technical terminology appropriate for a Business Analyst role.",
+      "negative": "Incorporating more of the provided keywords such as 'gap analysis' and 'business process mapping' would enhance word choice."
+    },
+    {
+      "criterion": "formatting",
+      "score": "9",
+      "positive": "The resume is neatly formatted with clear headings and clean layout, enhancing readability.",
+      "negative": "Consider minimizing the use of indentation for the 'Skills' section to maintain uniformity throughout the document."
+    },
+    {
+      "criterion": "optimal_length",
+      "score": "9",
+      "positive": "The resume maintains a focused length, covering all relevant experience without unnecessary details.",
+      "negative": "Further efficiency could be achieved by condensing descriptions of older roles slightly."
+    },
+    {
+      "criterion": "contact_information",
+      "score": "10",
+      "positive": "Comprehensive contact information is provided, including location, email, phone number, and a LinkedIn profile.",
+      "negative": "No significant negative point; all necessary contact details are present."
+    },
+    {
+      "criterion": "comprehensiveness",
+      "score": "9",
+      "positive": "Covers a wide range of relevant experiences, skills, and educational background pertinent to a Business Analyst position.",
+      "negative": "The resume doesn\u2019t reference certifications explicitly, which would contribute to the completeness of the document."
+    }
+  ],
+  "total_score": "91",
+  "summary_feedback": "Overall, this resume effectively highlights Glen Dsilva's key skills and achievements as a Business Analyst. It is well-structured, aligned with the role's requirements, and includes quantifiable results that demonstrate his value to potential employers. Incorporating additional specific keywords and certifications could further enhance its alignment with job descriptions in the target field."
+}
