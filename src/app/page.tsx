@@ -36,6 +36,7 @@ export default function ResumeScorer() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [scoreData, setScoreData] = useState<ScoreData | null>(null)
   const [dragActive, setDragActive] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -71,63 +72,55 @@ export default function ResumeScorer() {
   }
 
   const handleAnalyze = async () => {
-    if (!file || !jobTitle.trim()) return;
+    if (!file || !jobTitle.trim()) return
 
-    setIsAnalyzing(true);
-    setScoreData(null);
-    // Clear previous errors
-    // setError(null); 
+    setIsAnalyzing(true)
+    setScoreData(null)
+    setError(null)
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('jobTitle', jobTitle);
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('jobTitle', jobTitle)
 
     try {
       const response = await fetch('/api/score', {
         method: 'POST',
         body: formData,
-      });
+      })
+
+      const data = await response.json()
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'An unknown error occurred.');
+        throw new Error(data.error || 'An unknown error occurred.')
       }
 
-      const data = await response.json();
-
-      // Defensive check to ensure data.scores is an array
-      if (!data.scores || !Array.isArray(data.scores)) {
-        throw new Error('Invalid data format received from the server.');
+      if (!data.scores || !Array.isArray(data.scores) || !data.total_score) {
+        throw new Error('Invalid data format received from the server.')
       }
 
-      // Transform the API response to match the new UI's data structure
-      const breakdown: { [key: string]: number } = {};
-      const feedback: { [key: string]: string } = {};
+      const breakdown: { [key: string]: number } = {}
+      const feedback: { [key: string]: string } = {}
       
       data.scores.forEach((item: { criterion: string; score: string; positive: string; negative: string }) => {
-        const key = item.criterion.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_');
-        breakdown[key] = parseInt(item.score, 10) || 0; // Default to 0 if score is not a number
-        feedback[key] = `${item.positive} ${item.negative}`;
+        const key = item.criterion.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_')
+        breakdown[key] = parseInt(item.score, 10) || 0
+        feedback[key] = `${item.positive} ${item.negative}`
       });
 
       const transformedData: ScoreData = {
-        overall: parseInt(data.total_score, 10) || 0, // Default to 0
+        overall: parseInt(data.total_score, 10) || 0,
         breakdown: breakdown as ScoreData['breakdown'],
         feedback,
-      };
-
-      setScoreData(transformedData);
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        // setError(error.message);
-      } else {
-        // setError('An unexpected error occurred.');
       }
+
+      setScoreData(transformedData)
+    } catch (err) {
+      console.error(err)
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred.')
     } finally {
-      setIsAnalyzing(false);
+      setIsAnalyzing(false)
     }
-  };
+  }
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-600"
@@ -278,6 +271,21 @@ export default function ResumeScorer() {
                 )}
               </Button>
             </div>
+
+            {/* Error Display */}
+            {error && (
+              <Card className="bg-destructive/10 border-destructive/50 text-destructive-foreground">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3">
+                    <AlertCircle className="h-5 w-5 text-destructive" />
+                    <div>
+                      <p className="font-semibold">An Error Occurred</p>
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         ) : (
           <div className="space-y-8 animate-fade-in-up">
