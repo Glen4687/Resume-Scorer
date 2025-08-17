@@ -71,50 +71,63 @@ export default function ResumeScorer() {
   }
 
   const handleAnalyze = async () => {
-    if (!file || !jobTitle.trim()) return
+    if (!file || !jobTitle.trim()) return;
 
-    setIsAnalyzing(true)
-    setScoreData(null)
+    setIsAnalyzing(true);
+    setScoreData(null);
+    // Clear previous errors
+    // setError(null); 
 
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('jobTitle', jobTitle)
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('jobTitle', jobTitle);
 
     try {
       const response = await fetch('/api/score', {
         method: 'POST',
         body: formData,
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to score resume')
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'An unknown error occurred.');
       }
 
-      const data = await response.json()
+      const data = await response.json();
+
+      // Defensive check to ensure data.scores is an array
+      if (!data.scores || !Array.isArray(data.scores)) {
+        throw new Error('Invalid data format received from the server.');
+      }
 
       // Transform the API response to match the new UI's data structure
-      const breakdown: { [key: string]: number } = {}
-      const feedback: { [key: string]: string } = {}
+      const breakdown: { [key: string]: number } = {};
+      const feedback: { [key: string]: string } = {};
       
       data.scores.forEach((item: { criterion: string; score: string; positive: string; negative: string }) => {
-        const key = item.criterion.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_')
-        breakdown[key] = parseInt(item.score, 10)
-        feedback[key] = `${item.positive} ${item.negative}`
+        const key = item.criterion.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_');
+        breakdown[key] = parseInt(item.score, 10) || 0; // Default to 0 if score is not a number
+        feedback[key] = `${item.positive} ${item.negative}`;
       });
 
       const transformedData: ScoreData = {
-        overall: parseInt(data.total_score, 10),
+        overall: parseInt(data.total_score, 10) || 0, // Default to 0
         breakdown: breakdown as ScoreData['breakdown'],
         feedback,
-      }
+      };
 
-      setScoreData(transformedData)
+      setScoreData(transformedData);
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      if (error instanceof Error) {
+        // setError(error.message);
+      } else {
+        // setError('An unexpected error occurred.');
+      }
     } finally {
-      setIsAnalyzing(false)
+      setIsAnalyzing(false);
     }
-  }
+  };
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-green-600"
