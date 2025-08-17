@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run prebuild && next build",
-    "prebuild": "./node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/tailwind.css --minify",
+    "build": "./node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/tailwind.css --minify && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "patch-package"
