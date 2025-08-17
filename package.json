@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "./node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/tailwind.css --minify && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "patch-package"
