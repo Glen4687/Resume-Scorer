@@ -3,8 +3,11 @@ import pdf from 'pdf-parse';
 import mammoth from 'mammoth';
 import OpenAI from 'openai';
 
+// Check for API key at the top level
+const openaiApiKey = process.env.OPENAI_API_KEY;
+
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: openaiApiKey,
 });
 
 const scoring_weights = {
@@ -20,6 +23,11 @@ const scoring_weights = {
 };
 
 export async function POST(req: NextRequest) {
+  // Return error if API key is missing
+  if (!openaiApiKey) {
+    return NextResponse.json({ error: 'OPENAI_API_KEY is not configured.' }, { status: 500 });
+  }
+
   const formData = await req.formData();
   const file = formData.get('file') as File;
   const jobTitle = formData.get('jobTitle') as string;
