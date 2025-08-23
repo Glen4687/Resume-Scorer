@@ -12,7 +12,7 @@ const openai = new OpenAI({
 
 const scoring_weights = {
   customization: 15,
-  spelling_grammar: 10,
+  grammar_spelling: 10,
   summary_statement: 10,
   measurable_results: 15,
   word_choice: 10,
@@ -92,11 +92,11 @@ async function scoreResume(resumeText: string, jobTitle: string, jobRequirements
     For each criterion, provide a score, positive feedback, and negative feedback.
     Finally, provide a total score and an overall summary feedback.
 
-    Return the output as a JSON object with the following structure:
+    Return the output as a JSON object with the following structure. For the 'criterion' field, use the exact keys provided in the 'scoring_weights' object (e.g., 'customization', 'spelling_grammar'):
     {
       "scores": [
         {
-          "criterion": "Criterion Name",
+          "criterion": "KEY_FROM_SCORING_WEIGHTS",
           "score": "Score (0-10 or weighted)",
           "positive": "Positive feedback",
           "negative": "Negative feedback"
