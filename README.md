@@ -1,4 +1,4 @@
-# Resume Scorer - Web Application
+# Resume Scorer
 
 This is a full-stack web application that scores a resume against a job title using the OpenAI GPT-4o API.
 
@@ -8,7 +8,8 @@ This is a full-stack web application that scores a resume against a job title us
 - **Job Title Input:** Score resumes for specific job titles.
 - **AI-Powered Scoring:** Uses GPT-4o to analyze and score resumes based on multiple criteria.
 - **Detailed Feedback:** Provides positive and negative feedback for each scoring criterion.
-- **Responsive UI:** Clean and responsive user interface built with Next.js and Tailwind CSS.
+- **Responsive UI:** Clean and responsive user interface.
+- **Dark Mode:** Toggle between light and dark mode.
 
 ## Tech Stack
 
@@ -51,11 +52,11 @@ This is a full-stack web application that scores a resume against a job title us
 
    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Deployment on Vercel
+## Deployment
 
-Deploy this application to Vercel with a single click.
+This application is ready to be deployed to Vercel.
 
-1. **Create a new project on Vercel** and import your repository `https://github.com/Glen4687/Resume-Scorer.git`.
+1. **Create a new project on Vercel** and import your repository.
 
 2. **Set the environment variable:**
    - In the Vercel project settings, navigate to the "Environment Variables" section.
